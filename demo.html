@@ -16,7 +16,7 @@ window.addEventListener("load",async function (){
     var movements = Object.keys(moveObj);
     document.getElementById('output').innerHTML = "";
     for(var i = 0;i < movements.length; i++){
-     if(moveObj[movement[i]]){
+     if(moveObj[movements[i]]){
       document.getElementById('output').innerHTML += "<li>" + movements[i] + "</li>";
      };
     };
