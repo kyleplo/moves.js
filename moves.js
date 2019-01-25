@@ -1,5 +1,5 @@
 var net, movesDefaults;
-async function movesReady(a, f, s, o){
+async function movesReady(f, s, o, a){
  net = await posenet.load(a || 0.75);
  movesDefaults = {};
  movesDefaults.flip = f;
