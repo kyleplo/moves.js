@@ -8,7 +8,8 @@ async function movesReady(f, s, o, a){
  return new Promise(function (y,n){y(net)});
 }
 async function moves(i, a){
- var pose = await net.estimateSinglePose(i, movesDefaults.size, movesDefaults.flip, movesDefaults.output);
+ var poseObj = await net.estimateSinglePose(i, movesDefaults.size, movesDefaults.flip, movesDefaults.output);
+ var pose = poseObj.keypoints;
  var bodyXCenter = (pose[5].position.x + pose[6].position.x + pose[11].position.x + pose[12].position.x) / 4;
  var bodyYCenter = (pose[5].position.y + pose[6].position.y + pose[11].position.y + pose[12].position.y) / 4;
  var headY = (pose[0].position.y + pose[1].position.y + pose[2].position.y + pose[3].position.y + pose[4].position.y) / 5;
