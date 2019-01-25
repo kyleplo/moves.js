@@ -20,12 +20,14 @@ async function moves(i, a){
    headTippedRight: Math.round(pose[1].position.y / a) < Math.round(pose[2].position.y / a),
    leftHandUp: pose[9].position.y < headY,
    rightHandUp: pose[10].position.y < headY,
-   leftHandOut: Math.round(pose[9].position.x / a) < bodyXCenter / a,
-   rightHandOut: Math.round(pose[10].position.x / a) > bodyXCenter / a,
-   leftHandOutRight: Math.round(pose[9].position.x / a) > bodyXCenter / a,
-   rightHandOutLeft: Math.round(pose[10].position.x / a) < bodyXCenter / a,
+   leftHandOut: Math.round(pose[9].position.x / a) < (bodyXCenter / a),
+   rightHandOut: Math.round(pose[10].position.x / a) > (bodyXCenter / a),
+   leftHandOutRight: Math.round(pose[9].position.x / a) > (bodyXCenter / a),
+   rightHandOutLeft: Math.round(pose[10].position.x / a) < (bodyXCenter / a),
    leftLegUp: Math.round(pose[15].position.y) < Math.round(pose[13].position.y),
-   rightLegUp: Math.round(pose[14].position.y) < Math.round(pose[16].position.y)
+   rightLegUp: Math.round(pose[16].position.y) < Math.round(pose[14].position.y),
+   headTurnedLeft: Math.round(pose[0].position.x / a) < (bodyXCenter / a),
+   headTurnedRight: Math.round(pose[0].position.x / a) > (bodyXCenter / a)
   };
   y(data);
  });
