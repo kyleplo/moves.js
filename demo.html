@@ -1,0 +1,27 @@
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@0.2.3"></script>
+<script src="./moves.js"></script>
+<video id="video" width="640" height="480" autoplay></video>
+<ul id="output"></ul>
+<script>
+window.addEventListener("load",async function (){
+ await movesReady(true);
+ var video = document.getElementById('video');
+ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+   video.srcObject = stream;
+   video.play();
+   setInterval(async function (){
+    var moveObj = await moves(video);
+    var movements = Object.keys(moveObj);
+    document.getElementById('output').innerHTML = "";
+    for(var i = 0;i < movements.length; i++){
+     if(moveObj[movement[i]]){
+      document.getElementById('output').innerHTML += "<li>" + movements[i] + "</li>";
+     };
+    };
+   }, 500);
+  });
+ }
+});
+</script>
