@@ -27,11 +27,11 @@ window.addEventListener("load",async function (){
     };
     ctx.clearRect(0, 0, 640, 480);
     ctx.beginPath();
-    ctx.moveTo(pose[5].position.x, pose[5].y);
-    ctx.lineTo(pose[6].position.x, pose[6].y);
-    ctx.lineTo(pose[11].position.x, pose[11].y);
-    ctx.lineTo(pose[12].position.x, pose[12].y);
-    ctx.lineTo(pose[5].position.x, pose[5].y);
+    ctx.moveTo(pose[5].position.x, pose[5].position.y);
+    ctx.lineTo(pose[6].position.x, pose[6].position.y);
+    ctx.lineTo(pose[11].position.x, pose[11].position.y);
+    ctx.lineTo(pose[12].position.x, pose[12].position.y);
+    ctx.lineTo(pose[5].position.x, pose[5].position.y);
     ctx.fill();
     ctx.beginPath();
     ctx.moveTo(pose[5].position.x, pose[5].position.y);
