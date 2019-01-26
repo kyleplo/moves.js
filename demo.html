@@ -2,17 +2,22 @@
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@0.2.3"></script>
 <script src="./moves.js"></script>
 <video id="video" width="640" height="480" autoplay style="transform: rotateY(180deg)"></video>
+<canvas width="640" height="480" id="canvas" style="transform: rotateY(180deg)"></canvas>
 <ul id="output"></ul>
 <script>
 window.addEventListener("load",async function (){
  await movesReady(true);
  var video = document.getElementById('video');
+ var canvas = document.getElementById('canvas');
+ var ctx = canvas.getContext("2d");
  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
    video.srcObject = stream;
    video.play();
    setInterval(async function (){
-    var moveObj = await moves(video);
+    var poseObj = await net.estimateSinglePose(video, movesDefaults.size, movesDefaults.flip, movesDefaults.output);
+    var pose = poseObj.keypoints;
+    var moveObj = await moves(poseObj);
     var movements = Object.keys(moveObj);
     document.getElementById('output').innerHTML = "";
     for(var i = 0;i < movements.length; i++){
@@ -20,6 +25,28 @@ window.addEventListener("load",async function (){
       document.getElementById('output').innerHTML += "<li>" + movements[i] + "</li>";
      };
     };
+    ctx.clearRect(0, 0, 640, 480);
+    ctx.beginPath();
+    ctx.moveTo(pose[5].x, pose[5].y);
+    ctx.lineTo(pose[6].x, pose[6].y);
+    ctx.lineTo(pose[11].x, pose[11].y);
+    ctx.lineTo(pose[12].x, pose[12].y);
+    ctx.lineTo(pose[5].x, pose[5].y);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(pose[5].x, pose[5].y);
+    ctx.lineTo(pose[7].x, pose[7].y);
+    ctx.lineTo(pose[9].x, pose[9].y);
+    ctx.moveTo(pose[6].x, pose[6].y);
+    ctx.lineTo(pose[8].x, pose[8].y);
+    ctx.lineTo(pose[10].x, pose[10].y);
+    ctx.moveTo(pose[11].x, pose[11].y);
+    ctx.lineTo(pose[13].x, pose[13].y);
+    ctx.lineTo(pose[15].x, pose[15].y);
+    ctx.moveTo(pose[12].x, pose[12].y);
+    ctx.lineTo(pose[14].x, pose[14].y);
+    ctx.lineTo(pose[16].x, pose[26].y);
+    ctx.stroke();
    }, 500);
   });
  }
