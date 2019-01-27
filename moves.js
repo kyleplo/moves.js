@@ -1,4 +1,5 @@
-var net, movesDefaults;
+var net, movesDefaults, movesRegistry;
+movesRegistry = {};
 async function movesReady(f, s, o, a){
  net = await posenet.load(a || 0.75);
  movesDefaults = {};
@@ -34,6 +35,26 @@ async function moves(i, a){
    headTurnedLeft: Math.round(pose[0].position.x / a) < (bodyXCenter / a),
    headTurnedRight: Math.round(pose[0].position.x / a) > (bodyXCenter / a)
   };
+  var moveNames = Object.keys(movesRegistry);
+  var dataValues = Object.keys(data);
+  var results = [];
+  for(var i = 0; i < moveNames.length; i++){
+   var couldBe = true;
+   for(var x = 0; x < dataValues.length; x++){
+    if((movesRegistry[moveNames[i]] === undefined) || (data[dataValues[x]] === movesRegistry[moveNames[i]])){
+     couldBe = true;
+    }else{
+     couldBe = false;
+    };
+   };
+   if(couldBe){
+    results.push(moveNames[i]);
+   };
+  };
+  data.moves = results;
   y(data);
  });
+}
+function registerMove(t, o){
+ movesRegistry[t] = o;
 }
