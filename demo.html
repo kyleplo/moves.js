@@ -2,10 +2,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@0.2.3"></script>
 <script src="./moves.js"></script>
 <video id="video" width="640" height="480" autoplay style="transform: rotateY(180deg)"></video>
-<canvas width="640" height="480" id="canvas" style="transform: rotateY(180deg)"></canvas>
+<canvas width="640" height="480" id="canvas"></canvas>
+<ul id="moveList"></ul>
 <ul id="output"></ul>
 <script>
 window.addEventListener("load",async function (){
+ registerMove("handsUp", {leftHandUp: true, rightHandUp: true});
+ registerMove("handsOut", {leftHandOut: true, rightHandOut: true});
+ registerMove("facingLeft", {leftHandOut: true, headTurnedLeft: true});
+ registerMove("facingRight", {rightHandOut: true, headTurnedRight: true});
+ registerMove("jumping", {leftLegUp: true, rightLegUp: true});
  await movesReady(true);
  var video = document.getElementById('video');
  var canvas = document.getElementById('canvas');
@@ -21,9 +27,13 @@ window.addEventListener("load",async function (){
     var movements = Object.keys(moveObj);
     document.getElementById('output').innerHTML = "";
     for(var i = 0;i < movements.length; i++){
-     if(moveObj[movements[i]]){
+     if(moveObj[movements[i]] && !(movements[i] = "moves")){
       document.getElementById('output').innerHTML += "<li>" + movements[i] + "</li>";
      };
+    };
+    document.getElementById('moveList').innerHTML = "";
+    for(var i = 0;i < moveObj.moves.length; i++){
+     document.getElementById('moveList').innerHTML += "<li>" + moveObj.moves[i] + "</li>";
     };
     ctx.clearRect(0, 0, 640, 480);
     ctx.beginPath();
