@@ -3,9 +3,11 @@
 <script src="./moves.js"></script>
 <video id="video" width="640" height="480" autoplay style="transform: rotateY(180deg)"></video>
 <canvas width="640" height="480" id="canvas"></canvas>
+<button onclick="play = !play">Play/Pause</button>
 <ul id="moveList"></ul>
 <ul id="output"></ul>
 <script>
+var play = true;
 window.addEventListener("load",async function (){
  registerMove("handsUp", {leftHandUp: true, rightHandUp: true});
  registerMove("handsOut", {leftHandOut: true, rightHandOut: true});
@@ -21,6 +23,7 @@ window.addEventListener("load",async function (){
    video.srcObject = stream;
    video.play();
    setInterval(async function (){
+    if(!play){return false};
     var poseObj = await net.estimateSinglePose(video, movesDefaults.size, movesDefaults.flip, movesDefaults.output);
     var pose = poseObj.keypoints;
     var moveObj = await moves(poseObj);
