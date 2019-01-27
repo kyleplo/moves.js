@@ -25,9 +25,10 @@ window.addEventListener("load",async function (){
     var pose = poseObj.keypoints;
     var moveObj = await moves(poseObj);
     var movements = Object.keys(moveObj);
+    console.log(moveObj);
     document.getElementById('output').innerHTML = "";
     for(var i = 0;i < movements.length; i++){
-     if(moveObj[movements[i]] && !(movements[i] = "moves")){
+     if(moveObj[movements[i]] && !(movements[i] === "moves")){
       document.getElementById('output').innerHTML += "<li>" + movements[i] + "</li>";
      };
     };
